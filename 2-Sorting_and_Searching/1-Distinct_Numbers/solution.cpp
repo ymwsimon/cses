@@ -1,11 +1,11 @@
 #include <iostream>
-#include <unordered_set>
+#include <set>
 
 int main(void)
 {
-	int						n;
-	int						temp;
-	std::unordered_set<int>	s;
+	int				n;
+	int				temp;
+	std::set<int>	s;
 
 	std::cin >> n;
 	while (n--)

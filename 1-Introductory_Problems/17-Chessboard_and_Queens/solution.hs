@@ -1,22 +1,17 @@
 import Control.Monad (replicateM)
-import Data.Sequence qualified as S
-import Data.Foldable ( Foldable(toList) )
+import Data.Bool (bool)
 
-calWays :: [String] -> S.Seq Int -> Int -> Int
+calWays :: [String] -> [(Int, Int)] -> Int -> Int
 calWays m pos i =
-  if i >= 8
-    then 1
-    else
-      sum $ map f [0..7]
-        where f j =
-                let newPos = S.adjust' (const j) i pos
-                    g (idx, p) = p /= j && p + (i - idx) /= j && p - (i - idx) /= j
-                    validPos = m !! j !! i == '.' && all g (zip [0..] $ take i $ toList newPos) in
-                  if validPos
-                    then calWays m newPos $ i + 1
-                    else 0
+  bool 1 (sum $ map iterNewPos [0..7]) (i < 8)
+  where iterNewPos j = 
+          let newPos = (length pos, j) : pos
+              notAttack (idx, p) = notElem j [p, p + idxDiff, p - idxDiff]
+                where idxDiff = i - idx
+              validPos = m !! j !! i == '.' && all notAttack pos in
+            bool 0 (calWays m newPos $ i + 1) validPos
 
 main :: IO ()
 main = do
   m <- replicateM 8 getLine
-  print $ calWays m (S.replicate 8 0) 0
+  print $ calWays m [] 0

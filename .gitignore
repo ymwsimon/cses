@@ -2,3 +2,4 @@ a.out
 solution
 *.hi
 *.o
+.vscode/settings.json

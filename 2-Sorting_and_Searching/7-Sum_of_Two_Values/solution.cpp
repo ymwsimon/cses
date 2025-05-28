@@ -4,9 +4,9 @@
 
 int	main(void)
 {
-	int	n;
-	int	x;
-	int	j;
+	int					n;
+	int					x;
+	int					j;
 	std::vector<int>	nums;
 	std::map<int, int>	lookup;
 
